@@ -99,7 +99,7 @@ class _AddTaskAlertDialogState extends State<AddTaskAlertDialog> {
       actions: [
         ElevatedButton(
           onPressed: () {
-            Navigator.of(context, rootNavigator: true).pop();
+            Navigator.of(context).pop();
           },
           child: const Text('Cancel'),
         ),
@@ -110,12 +110,9 @@ class _AddTaskAlertDialogState extends State<AddTaskAlertDialog> {
 
             if (taskdate.isNotEmpty && taskDesc.isNotEmpty) {
               try {
-                context
-                    .read<HomeBloc>()
-                    .add(TaskAddEvent(time: taskdate, text: taskDesc));
+                context.read<HomeBloc>().add(TaskAddEvent(time: taskdate, text: taskDesc));
                 context.read<HomeBloc>().add(TaskLoadedEvent());
-                Navigator.of(context, rootNavigator: true)
-                    .pop(); // Close the dialog
+                Navigator.of(context).pop();
               } catch (e) {
                 debugPrint(e.toString());
               }
