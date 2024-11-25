@@ -61,6 +61,7 @@ class _AddTaskAlertDialogState extends State<AddTaskAlertDialog> {
                       final TimeOfDay? timeOfDay = await showTimePicker(
                         context: context,
                         initialTime: selectedTime,
+
                         initialEntryMode: TimePickerEntryMode.dial,
                       );
                       if (timeOfDay != null) {

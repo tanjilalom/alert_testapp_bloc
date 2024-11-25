@@ -25,9 +25,24 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<TaskLoadedEvent>((event, emit) async {
       emit(HomeInitial());
 
-      var box = await Hive.openBox('tasksBox');
+
+      /*var box = await Hive.openBox('tasksBox');
       List<Map<String, dynamic>> taskList =
-          box.values.map((e) => Map<String, dynamic>.from(e)).toList();
+          box.values.map((e) => Map<String, dynamic>.from(e)).toList();*/
+
+
+      var box = await Hive.openBox('tasksBox');
+      List<Map<String, dynamic>> taskList = box.keys.map((key) {
+        var value = box.get(key);
+        return {
+          'key': key,
+          'taskDesc': value['taskDesc'],
+          'taskdate': value['taskdate'],
+        };
+      }).toList();
+      
+
+
 
       emit(HomeLoadedState(taskList: taskList));
     });
