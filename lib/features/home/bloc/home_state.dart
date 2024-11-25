@@ -10,3 +10,6 @@ class HomeLoadedState extends HomeState {
 
   HomeLoadedState({required this.taskList});
 }
+
+class TaskDeleteState extends HomeState{
+}

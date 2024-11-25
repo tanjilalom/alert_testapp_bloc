@@ -12,7 +12,6 @@ part 'home_state.dart';
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc() : super(HomeInitial()) {
     on<TaskAddEvent>((event, emit) async {
-
       var box = await Hive.openBox('tasksBox');
 
       final newTask = {
@@ -24,7 +23,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     });
 
     on<TaskLoadedEvent>((event, emit) async {
-
       emit(HomeInitial());
 
       var box = await Hive.openBox('tasksBox');
@@ -32,6 +30,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           box.values.map((e) => Map<String, dynamic>.from(e)).toList();
 
       emit(HomeLoadedState(taskList: taskList));
+    });
+
+    on<TaskDeleteEvent>((event, emit) async {
+
+        var box = await Hive.openBox('tasksBox');
+        await box.delete(event.taskKey); // Delete task using its key
+        add(TaskLoadedEvent()); // Reload tasks after deletion
+
     });
   }
 }
